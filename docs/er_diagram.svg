@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 20px; fill: #6B21D9; }
+      .subtitle { font-family: 'Poppins', sans-serif; font-size: 13px; fill: #64748B; }
+      .entity-box { fill: #FFFFFF; stroke: #6B21D9; stroke-width: 2; rx: 8; }
+      .entity-header { fill: #F6F2FF; stroke: #6B21D9; stroke-width: 2; rx: 8; }
+      .header-text { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; fill: #4C1D95; text-anchor: middle; }
+      .attr-text { font-family: 'Poppins', monospace; font-size: 11.5px; fill: #1E293B; }
+      .pk { font-weight: bold; fill: #7C3AED; }
+      .fk { font-weight: bold; fill: #0284C7; }
+      .line { stroke: #94A3B8; stroke-width: 2; fill: none; }
+      .cardinality { font-family: sans-serif; font-size: 11px; fill: #475569; font-weight: 600; }
+    </style>
+  </defs>
+
+  <rect width="1000" height="700" fill="#F8F7FC"/>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" class="title">LibraCore — Entity-Relationship Architecture Diagram</text>
+  <text x="500" y="55" text-anchor="middle" class="subtitle">8 Relational Entities · Strict PK/FK Constraints · 3NF Normalized</text>
+
+  <!-- 1. CATEGORY (Top Left) -->
+  <g transform="translate(40, 90)">
+    <rect class="entity-box" width="200" height="130"/>
+    <rect class="entity-header" width="200" height="30"/>
+    <text x="100" y="20" class="header-text">CATEGORY</text>
+    <text x="12" y="50" class="attr-text pk">PK category_id : INT</text>
+    <text x="12" y="70" class="attr-text">   category_name : VARCHAR(80)</text>
+    <text x="12" y="90" class="attr-text">   category_code : VARCHAR(10)</text>
+    <text x="12" y="110" class="attr-text">   shelf_zone : VARCHAR(20)</text>
+  </g>
+
+  <!-- 2. AUTHOR (Top Right) -->
+  <g transform="translate(760, 90)">
+    <rect class="entity-box" width="200" height="130"/>
+    <rect class="entity-header" width="200" height="30"/>
+    <text x="100" y="20" class="header-text">AUTHOR</text>
+    <text x="12" y="50" class="attr-text pk">PK author_id : INT</text>
+    <text x="12" y="70" class="attr-text">   first_name : VARCHAR(50)</text>
+    <text x="12" y="90" class="attr-text">   last_name : VARCHAR(50)</text>
+    <text x="12" y="110" class="attr-text">   email : VARCHAR(100)</text>
+  </g>
+
+  <!-- 3. BOOK (Center) -->
+  <g transform="translate(380, 90)">
+    <rect class="entity-box" width="240" height="210"/>
+    <rect class="entity-header" width="240" height="30"/>
+    <text x="120" y="20" class="header-text">BOOK</text>
+    <text x="12" y="50" class="attr-text pk">PK book_id : INT</text>
+    <text x="12" y="70" class="attr-text">   isbn : VARCHAR(20)</text>
+    <text x="12" y="90" class="attr-text">   title : VARCHAR(150)</text>
+    <text x="12" y="110" class="attr-text fk">FK author_id : INT</text>
+    <text x="12" y="130" class="attr-text fk">FK category_id : INT</text>
+    <text x="12" y="150" class="attr-text">   publisher : VARCHAR(100)</text>
+    <text x="12" y="170" class="attr-text">   price : DECIMAL(8,2)</text>
+    <text x="12" y="190" class="attr-text">   total / available_copies : INT</text>
+  </g>
+
+  <!-- 4. LIBRARIAN (Far Left Middle) -->
+  <g transform="translate(40, 390)">
+    <rect class="entity-box" width="200" height="130"/>
+    <rect class="entity-header" width="200" height="30"/>
+    <text x="100" y="20" class="header-text">LIBRARIAN</text>
+    <text x="12" y="50" class="attr-text pk">PK librarian_id : INT</text>
+    <text x="12" y="70" class="attr-text">   first_name : VARCHAR(50)</text>
+    <text x="12" y="90" class="attr-text">   designation : VARCHAR(50)</text>
+    <text x="12" y="110" class="attr-text">   salary : DECIMAL(10,2)</text>
+  </g>
+
+  <!-- 5. MEMBER (Bottom Right) -->
+  <g transform="translate(760, 390)">
+    <rect class="entity-box" width="200" height="160"/>
+    <rect class="entity-header" width="200" height="30"/>
+    <text x="100" y="20" class="header-text">MEMBER</text>
+    <text x="12" y="50" class="attr-text pk">PK member_id : INT</text>
+    <text x="12" y="70" class="attr-text">   member_code : VARCHAR(20)</text>
+    <text x="12" y="90" class="attr-text">   first_name, last_name</text>
+    <text x="12" y="110" class="attr-text">   member_type : VARCHAR(20)</text>
+    <text x="12" y="130" class="attr-text">   status : VARCHAR(20)</text>
+    <text x="12" y="150" class="attr-text">   max_books_allowed : INT</text>
+  </g>
+
+  <!-- 6. ISSUE_TRANSACTION (Center Middle) -->
+  <g transform="translate(380, 370)">
+    <rect class="entity-box" width="240" height="160"/>
+    <rect class="entity-header" width="240" height="30"/>
+    <text x="120" y="20" class="header-text">ISSUE_TRANSACTION</text>
+    <text x="12" y="50" class="attr-text pk">PK issue_id : INT</text>
+    <text x="12" y="70" class="attr-text fk">FK book_id : INT</text>
+    <text x="12" y="90" class="attr-text fk">FK member_id : INT</text>
+    <text x="12" y="110" class="attr-text fk">FK librarian_id : INT</text>
+    <text x="12" y="130" class="attr-text">   issue_date, due_date : DATE</text>
+    <text x="12" y="150" class="attr-text">   return_date : DATE, status</text>
+  </g>
+
+  <!-- 7. RESERVATION (Top Center-ish or Middle Right) -->
+  <g transform="translate(680, 260)">
+    <rect class="entity-box" width="200" height="110"/>
+    <rect class="entity-header" width="200" height="30"/>
+    <text x="100" y="20" class="header-text">RESERVATION</text>
+    <text x="12" y="50" class="attr-text pk">PK reservation_id : INT</text>
+    <text x="12" y="70" class="attr-text fk">FK book_id, member_id : INT</text>
+    <text x="12" y="90" class="attr-text">   queue_pos, status : VARCHAR</text>
+  </g>
+
+  <!-- 8. FINE (Bottom Center) -->
+  <g transform="translate(380, 570)">
+    <rect class="entity-box" width="240" height="110"/>
+    <rect class="entity-header" width="240" height="30"/>
+    <text x="120" y="20" class="header-text">FINE</text>
+    <text x="12" y="50" class="attr-text pk">PK fine_id : INT</text>
+    <text x="12" y="70" class="attr-text fk">FK,UK issue_id, FK member_id : INT</text>
+    <text x="12" y="90" class="attr-text">   fine_amount, payment_status</text>
+  </g>
+
+  <!-- Relationship Connectors -->
+  <!-- CATEGORY -> BOOK -->
+  <path d="M 240 150 L 380 150" class="line"/>
+  <text x="250" y="142" class="cardinality">1</text>
+  <text x="365" y="142" class="cardinality">M</text>
+
+  <!-- AUTHOR -> BOOK -->
+  <path d="M 760 150 L 620 150" class="line"/>
+  <text x="745" y="142" class="cardinality">1</text>
+  <text x="630" y="142" class="cardinality">M</text>
+
+  <!-- BOOK -> ISSUE_TRANSACTION -->
+  <path d="M 500 300 L 500 370" class="line"/>
+  <text x="508" y="320" class="cardinality">1</text>
+  <text x="508" y="360" class="cardinality">M</text>
+
+  <!-- LIBRARIAN -> ISSUE_TRANSACTION -->
+  <path d="M 240 450 L 380 450" class="line"/>
+  <text x="250" y="442" class="cardinality">1</text>
+  <text x="365" y="442" class="cardinality">M</text>
+
+  <!-- MEMBER -> ISSUE_TRANSACTION -->
+  <path d="M 760 450 L 620 450" class="line"/>
+  <text x="745" y="442" class="cardinality">1</text>
+  <text x="630" y="442" class="cardinality">M</text>
+
+  <!-- ISSUE_TRANSACTION -> FINE -->
+  <path d="M 500 530 L 500 570" class="line"/>
+  <text x="508" y="545" class="cardinality">1</text>
+  <text x="508" y="565" class="cardinality">0..1</text>
+
+  <!-- BOOK -> RESERVATION -->
+  <path d="M 620 220 L 700 220 L 700 260" class="line"/>
+  <text x="630" y="215" class="cardinality">1</text>
+  <text x="708" y="250" class="cardinality">M</text>
+
+  <!-- MEMBER -> RESERVATION -->
+  <path d="M 800 390 L 800 370" class="line"/>
+  <text x="808" y="385" class="cardinality">1</text>
+  <text x="808" y="365" class="cardinality">M</text>
+</svg>

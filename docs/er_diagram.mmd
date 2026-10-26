@@ -1,0 +1,107 @@
+erDiagram
+    CATEGORY ||--o{ BOOK : classifies
+    AUTHOR ||--o{ BOOK : writes
+    LIBRARIAN ||--o{ ISSUE_TRANSACTION : processes
+    BOOK ||--o{ ISSUE_TRANSACTION : loaned_in
+    MEMBER ||--o{ ISSUE_TRANSACTION : borrows
+    BOOK ||--o{ RESERVATION : reserved_for
+    MEMBER ||--o{ RESERVATION : places
+    ISSUE_TRANSACTION ||--o| FINE : incurs
+    MEMBER ||--o{ FINE : liable_for
+
+    CATEGORY {
+        int category_id PK
+        string category_name UK
+        string category_code UK
+        string shelf_zone
+        string description
+    }
+
+    AUTHOR {
+        int author_id PK
+        string first_name
+        string last_name
+        string email UK
+        string nationality
+        int birth_year
+    }
+
+    LIBRARIAN {
+        int librarian_id PK
+        string first_name
+        string last_name
+        string email UK
+        string phone UK
+        date hire_date
+        string designation
+        decimal salary
+        string shift
+    }
+
+    BOOK {
+        int book_id PK
+        string isbn UK
+        string title
+        int author_id FK
+        int category_id FK
+        string publisher
+        date publish_date
+        string edition
+        string language
+        string shelf_location
+        decimal price
+        int total_copies
+        int available_copies
+        string cover_url
+        date added_on
+        string status
+    }
+
+    MEMBER {
+        int member_id PK
+        string member_code UK
+        string first_name
+        string last_name
+        string email UK
+        string phone UK
+        string member_type
+        string department
+        date join_date
+        date membership_expiry
+        int max_books_allowed
+        string status
+    }
+
+    ISSUE_TRANSACTION {
+        int issue_id PK
+        int book_id FK
+        int member_id FK
+        int librarian_id FK
+        date issue_date
+        date due_date
+        date return_date
+        string status
+    }
+
+    RESERVATION {
+        int reservation_id PK
+        int book_id FK
+        int member_id FK
+        date reserved_on
+        date expires_on
+        int queue_position
+        string status
+    }
+
+    FINE {
+        int fine_id PK
+        int issue_id FK,UK
+        int member_id FK
+        int days_overdue
+        decimal fine_amount
+        date fine_date
+        string payment_status
+        date paid_on
+        string payment_method
+        string transaction_ref UK
+    }
